@@ -1,9 +1,6 @@
 var copySpan;
 var interval;
-
 var timer;
-// var currentTime;
-
 var startTime;
 
 var speechMark = [
@@ -50,6 +47,7 @@ var speechMark = [
 
 function startReading () {
   console.log('reading text');
+
   const spanText = document.getElementById('polly1');
   copySpan = spanText.innerHTML; //for later use on stopReading
  
@@ -66,7 +64,6 @@ function startReading () {
   }
   
   spanText.innerHTML = newDomString;
-  
   startListening();
 }
 
@@ -74,35 +71,25 @@ function stopReading () {
   const spanText = document.getElementById('polly1');
   spanText.innerHTML = copySpan || spanText.innerHTML;
   startTime = 0;
-  clearInterval(interval);
   console.log('stop reading');
 }
 
 function startListening () {
     console.log('start listening');
-    // timer = Date.now();
-    interval = setInterval(() => {
-        // highlightText(timer); 
-    }, 5000000);
-
     const audio = document.querySelector('audio');
-
+    
     startTime = 0;
     audio.addEventListener('timeupdate', (event) => {
-        // console.log('The currentTime attribute has been updated. Again.', event);
+        removeHighlights();
         highlightText(event.timeStamp); 
-        console.log(event.timeStamp);
     });
 }
 
 function highlightText(curTime) {
-  if (startTime === 0) {
+  if (startTime == 0) {
       startTime = curTime;
   }
   var elapsedTime = curTime - startTime;
-
-  console.log(startTime, elapsedTime);
-  
   var i = 0;
   var ind = speechMark.find((obj) => {
     i++;
@@ -112,6 +99,13 @@ function highlightText(curTime) {
   foundSpan = document.getElementById("span"+i);
   spanClassList = foundSpan && foundSpan.classList;
   spanClassList && spanClassList.add('highlight');
+}
 
-  console.log(foundSpan);
+function removeHighlights () {
+  var highlightedTexts = document.getElementsByClassName('highlight');
+  let classList;
+  for (let i in highlightedTexts) {
+    classList = highlightedTexts[i].classList;
+    classList && classList.remove('highlight');
+  }
 }
