@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="PollySpeech.css">
+        <script type="text/javascript" src="PollySpeech.js"></script>
+    </head>
+  <body>
+    <div>
+        <span id='polly1'>
+                Listen, customize, and download speech. Integrate when you're ready.
+                Type or paste your text in the window, choose your language and region, choose a voice, choose Listen to speech, and then integrate it into your applications and services.
+        </span>
+    </div>
+    <input type="button" value="start reading" onclick="startReading()"/>
+    
+    <input type="button" value="stop reading" onclick="stopReading()"/>
+
+    <div>
+        <audio
+            onplay="startReading()"
+            controls
+            src="../sample_speech_text1.mp3">
+            Your browser does not support the
+            <code>audio</code> element.
+        </audio>
+    </div>
+  </body>
+</html>
