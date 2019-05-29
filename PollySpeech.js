@@ -70,7 +70,6 @@ function startReading () {
 function stopReading () {
   const spanText = document.getElementById('polly1');
   spanText.innerHTML = copySpan || spanText.innerHTML;
-  startTime = undefined;
   console.log('stop reading');
 }
 
@@ -82,11 +81,15 @@ function startListening () {
         removeHighlights();
         highlightText(event.target.currentTime * 1000); //to milli seconds
     });
+
+    audio.addEventListener('pause', (event) => {
+      stopReading();
+    });
 }
 
 function highlightText(curTime) {
   if (!startTime) {
-      startTime = curTime;
+    startTime = curTime;
   }
   var elapsedTime = curTime - startTime;
   var i = 0;
