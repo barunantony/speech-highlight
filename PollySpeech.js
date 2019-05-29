@@ -70,7 +70,7 @@ function startReading () {
 function stopReading () {
   const spanText = document.getElementById('polly1');
   spanText.innerHTML = copySpan || spanText.innerHTML;
-  startTime = 0;
+  startTime = undefined;
   console.log('stop reading');
 }
 
@@ -78,15 +78,14 @@ function startListening () {
     console.log('start listening');
     const audio = document.querySelector('audio');
     
-    startTime = 0;
     audio.addEventListener('timeupdate', (event) => {
         removeHighlights();
-        highlightText(event.timeStamp); 
+        highlightText(event.target.currentTime * 1000); //to milli seconds
     });
 }
 
 function highlightText(curTime) {
-  if (startTime == 0) {
+  if (!startTime) {
       startTime = curTime;
   }
   var elapsedTime = curTime - startTime;
